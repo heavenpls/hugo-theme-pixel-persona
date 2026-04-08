@@ -188,12 +188,6 @@ Pixel Persona 特别适合这些文章内容：
 - `assets/css/pixel-persona.css`：主题样式主入口
 - `static/js/`：轻量交互脚本
 
-## 作者信息
-
-- GitHub: [heavenpls](https://github.com/heavenpls)
-- Repository: [hugo-theme-pixel-persona](https://github.com/heavenpls/hugo-theme-pixel-persona)
-- Contact Email: `1593623458@qq.com`
-
 ## License
 
 本项目使用 [MIT License](./LICENSE) 开源。
