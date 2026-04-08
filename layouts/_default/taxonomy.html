@@ -1,0 +1,43 @@
+{{ define "main" }}
+  {{ $pages := .Pages.ByDate.Reverse }}
+  <section class="pixel-shell pixel-list-shell">
+    <header class="pixel-page-header">
+      <p class="pixel-kicker">{{ .Kind | upper }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}
+        <p class="pixel-page-header__body">{{ . }}</p>
+      {{ else }}
+        <p class="pixel-page-header__body">{{ site.Params.description | default site.Title }}</p>
+      {{ end }}
+    </header>
+
+    <div class="pixel-chip-list" aria-label="Taxonomy overview">
+      {{ range $name, $_ := site.Taxonomies.tags }}
+        <a class="pixel-chip" href="{{ printf `/tags/%s/` $name | urlize | relLangURL }}">#{{ $name }}</a>
+      {{ end }}
+    </div>
+
+    <div class="pixel-term-timeline">
+      {{ range $pages }}
+        <article class="pixel-term-timeline__item">
+          <span class="pixel-term-timeline__dot"></span>
+          <div class="pixel-term-timeline__card">
+            <div class="pixel-post-card__meta">
+              <span>{{ .Date.Format (site.Params.DateFormat | default "2006-01-02") }}</span>
+              {{ if site.Params.ShowReadingTime }}
+                <span>{{ i18n "read_time" .ReadingTime }}</span>
+              {{ end }}
+            </div>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p>{{ .Params.summary | default .Description | default (.Summary | plainify) }}</p>
+          </div>
+        </article>
+      {{ else }}
+        <article class="pixel-empty-state">
+          <h2>EMPTY BUFFER</h2>
+          <p>这里暂时还没有文章。</p>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

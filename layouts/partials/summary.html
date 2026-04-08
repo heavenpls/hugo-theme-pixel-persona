@@ -1,0 +1,7 @@
+{{- if .Params.summary -}}
+  {{ .Params.summary }}
+{{- else if .Params.description -}}
+  {{ .Params.description }}
+{{- else -}}
+  {{ .Summary }}
+{{- end -}}

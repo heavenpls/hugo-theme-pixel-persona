@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{ $pages := .Pages.ByDate.Reverse }}
+  <section class="pixel-shell pixel-list-shell">
+    <header class="pixel-page-header">
+      <p class="pixel-kicker">{{ .Kind | upper }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}
+        <p class="pixel-page-header__body">{{ . }}</p>
+      {{ else }}
+        <p class="pixel-page-header__body">{{ site.Params.description | default site.Title }}</p>
+      {{ end }}
+    </header>
+
+    <div class="pixel-chip-list" aria-label="Taxonomy overview">
+      {{ range $name, $_ := site.Taxonomies.tags }}
+        <a class="pixel-chip" href="{{ printf `/tags/%s/` $name | urlize | relLangURL }}">#{{ $name }}</a>
+      {{ end }}
+    </div>
+
+    <div class="pixel-post-grid">
+      {{ range $pages }}
+        {{ partial "pixel/post-card.html" . }}
+      {{ else }}
+        <article class="pixel-empty-state">
+          <h2>EMPTY BUFFER</h2>
+          <p>这里暂时还没有文章。</p>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

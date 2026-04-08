@@ -1,0 +1,23 @@
+{{ $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}
+{{ $description := .Description | default .Summary | default site.Params.description | default site.Title }}
+{{ $styles := resources.Get "css/pixel-persona.css" | minify | fingerprint }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description | plainify }}">
+<meta name="author" content="{{ site.Params.author.name | default site.Title }}">
+{{ with .Permalink }}<link rel="canonical" href="{{ . }}">{{ end }}
+<meta name="theme-color" content="#f7f4ea">
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
+{{ with site.Params.assets.favicon }}<link rel="icon" href="{{ . | relURL }}">{{ end }}
+<script>
+  (function () {
+    var storedTheme = localStorage.getItem('pixel-theme');
+    var theme = storedTheme;
+    if (!theme) {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>

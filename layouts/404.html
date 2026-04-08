@@ -1,0 +1,13 @@
+{{ define "main" }}
+  <section class="pixel-shell pixel-list-shell pixel-404-shell">
+    <header class="pixel-page-header">
+      <p class="pixel-kicker">404</p>
+      <h1>{{ i18n "page_not_found" | default "信号丢失，页面未找到" }}</h1>
+      <p class="pixel-page-header__body">请求的坐标已经失联，但站点主通道仍然在线。</p>
+    </header>
+    <div class="pixel-404-actions">
+      <a class="pixel-button" href="{{ `/` | relLangURL }}">{{ i18n "back_home" | default "返回首页" }}</a>
+      <a class="pixel-button pixel-button--ghost" href="{{ `/posts/` | relLangURL }}">{{ i18n "browse_all" | default "查看全部" }}</a>
+    </div>
+  </section>
+{{ end }}

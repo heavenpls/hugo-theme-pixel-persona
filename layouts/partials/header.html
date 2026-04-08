@@ -1,0 +1,22 @@
+<header class="pixel-site-header">
+  <div class="pixel-shell pixel-header-shell">
+    <a class="pixel-brand" href="{{ `/` | relLangURL }}">
+      <span class="pixel-brand__badge">PX</span>
+      <span class="pixel-brand__text">
+        <strong>{{ site.Title }}</strong>
+        <small>{{ site.Params.author.name | default "Author" }}</small>
+      </span>
+    </a>
+
+    <nav class="pixel-nav" aria-label="Main navigation">
+      {{ range site.Menus.main }}
+        <a class="pixel-nav__link{{ if $.IsMenuCurrent `main` . }} is-active{{ end }}" href="{{ .URL | relLangURL }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+
+    <button class="pixel-theme-toggle" type="button" aria-label="切换主题" aria-pressed="false">
+      <span class="pixel-theme-toggle__label">THEME</span>
+      <span class="pixel-theme-toggle__state">LIGHT</span>
+    </button>
+  </div>
+</header>

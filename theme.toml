@@ -1,0 +1,12 @@
+name = "pixel-persona"
+license = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "A pixel-flavored Hugo theme for personal blogs with readable long-form typography."
+homepage = "https://github.com/heavenpls/hugo-theme-pixel-persona"
+tags = ["blog", "pixel", "retro", "editorial", "personal"]
+features = ["blog", "responsive", "dark mode", "taxonomy"]
+min_version = "0.160.0"
+
+[author]
+  name = "heavenpls"
+  homepage = "https://github.com/heavenpls"

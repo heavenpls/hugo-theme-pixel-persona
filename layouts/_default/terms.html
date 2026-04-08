@@ -1,0 +1,43 @@
+{{ define "main" }}
+  {{ $terms := .Data.Terms.Alphabetical }}
+  <section class="pixel-shell pixel-list-shell">
+    <header class="pixel-page-header">
+      <p class="pixel-kicker">INDEX</p>
+      <h1>{{ .Title }}</h1>
+      <p class="pixel-page-header__body">{{ i18n "taxonomy_overview" | default "主题索引" }}</p>
+    </header>
+
+    <section class="pixel-terms-overview">
+      <div class="pixel-terms-overview__stats">
+        <article>
+          <span>TOTAL TAGS</span>
+          <strong>{{ len $terms }}</strong>
+        </article>
+        <article>
+          <span>TOPIC POSTS</span>
+          <strong>{{ len site.RegularPages }}</strong>
+        </article>
+      </div>
+
+      <div class="pixel-tag-cloud">
+        {{ range $terms }}
+          {{ $recent := first 2 (.Page.Pages.ByDate.Reverse) }}
+          <article class="pixel-tag-card">
+            <a class="pixel-tag-card__title" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }}</a>
+            <p class="pixel-tag-card__meta">{{ .Count }} 篇文章</p>
+            <ul class="pixel-tag-card__recent-list">
+              {{ range $recent }}
+                <li>
+                  <a class="pixel-tag-card__recent-link" href="{{ .RelPermalink }}">
+                    <span class="pixel-tag-card__recent-text">{{ .Title }}</span>
+                    <span class="pixel-tag-card__recent-date">{{ .Date.Format "01-02" }}</span>
+                  </a>
+                </li>
+              {{ end }}
+            </ul>
+          </article>
+        {{ end }}
+      </div>
+    </section>
+  </section>
+{{ end }}

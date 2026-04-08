@@ -1,0 +1,9 @@
+{{ $summary := .Params.summary | default .Description | default .Summary }}
+{{ with $summary }}
+  <details class="pixel-summary-box" open>
+    <summary>{{ i18n "ai_summary" | default "AI摘要" }}</summary>
+    <div class="pixel-summary-box__body">
+      {{ . | safeHTML }}
+    </div>
+  </details>
+{{ end }}

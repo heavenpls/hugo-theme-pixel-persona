@@ -1,0 +1,55 @@
+<section class="pixel-shell pixel-single-shell">
+  <article class="pixel-article">
+    {{ $tags := .GetTerms "tags" }}
+    <header class="pixel-article__header">
+      <p class="pixel-kicker">POST / {{ .Section | upper }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="pixel-article__meta">
+        <span>{{ .Date.Format (site.Params.DateFormat | default "2006-01-02 15:04") }}</span>
+        {{ if site.Params.ShowReadingTime }}
+          <span>{{ i18n "read_time" .ReadingTime }}</span>
+        {{ end }}
+        <span>{{ site.Params.author.name | default "Author" }}</span>
+      </div>
+      {{ with $tags }}
+        <div class="pixel-chip-list">
+          {{ range . }}
+            <a class="pixel-chip" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+          {{ end }}
+        </div>
+      {{ end }}
+    </header>
+
+    <div class="pixel-article-stage">
+      <div class="pixel-reading-column">
+        {{ partial "pixel/summary-box.html" . }}
+
+        <div class="pixel-article__layout">
+          <div class="pixel-article__content prose">
+            {{ .Content }}
+          </div>
+        </div>
+      </div>
+
+      <aside class="pixel-article-sidebar">
+        <div class="pixel-article-facts">
+          <div class="pixel-article-facts__row">
+            <span>DATE</span>
+            <strong>{{ .Date.Format "2006-01-02" }}</strong>
+          </div>
+          {{ if site.Params.ShowReadingTime }}
+            <div class="pixel-article-facts__row">
+              <span>READ</span>
+              <strong>{{ i18n "read_time" .ReadingTime }}</strong>
+            </div>
+          {{ end }}
+          <div class="pixel-article-facts__row">
+            <span>TAGS</span>
+            <strong>{{ len $tags }}</strong>
+          </div>
+        </div>
+        {{ partial "pixel/toc.html" . }}
+      </aside>
+    </div>
+  </article>
+</section>

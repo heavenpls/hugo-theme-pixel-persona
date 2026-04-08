@@ -1,0 +1,34 @@
+- id: latest_posts
+  translation: "最新文章"
+
+- id: browse_all
+  translation: "查看全部"
+
+- id: read_article
+  translation: "阅读全文"
+
+- id: ai_summary
+  translation: "AI摘要"
+
+- id: table_of_contents
+  translation: "目录"
+
+- id: taxonomy_overview
+  translation: "主题索引"
+
+- id: back_home
+  translation: "返回首页"
+
+- id: page_not_found
+  translation: "信号丢失，页面未找到"
+
+- id: read_time
+  translation:
+    one: "约 1 分钟"
+    other: "约 {{ .Count }} 分钟"
+
+- id: code_copy
+  translation: "复制代码"
+
+- id: code_copied
+  translation: "已复制"

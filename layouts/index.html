@@ -1,0 +1,127 @@
+{{ define "main" }}
+  {{ $pages := where site.RegularPages "Type" "posts" }}
+  {{ if eq (len $pages) 0 }}
+    {{ $pages = site.RegularPages }}
+  {{ end }}
+  {{ $pages = $pages.ByDate.Reverse }}
+  {{ $heroLead := site.Params.pixelTheme.heroLead | default "像素化外壳，长文阅读内核。" }}
+  {{ $heroDescription := site.Params.pixelTheme.heroDescription | default site.Params.description | default site.Title }}
+  {{ $showStatusPanel := site.Params.pixelTheme.showStatusPanel | default true }}
+  {{ $yearGroups := $pages.GroupByDate "2006" }}
+
+  <section class="pixel-shell pixel-home-shell">
+    {{ if site.Params.pixelTheme.showHero | default true }}
+      <section class="pixel-hero">
+        <div class="pixel-hero__copy">
+          <p class="pixel-kicker">PERSONAL BLOG / HUGO / PIXEL MODE</p>
+          <h1>{{ site.Title }}</h1>
+          <p class="pixel-hero__lead">{{ $heroLead }}</p>
+          <p class="pixel-hero__body">{{ $heroDescription }}</p>
+          <div class="pixel-hero__actions">
+            <a class="pixel-button" href="{{ `/posts/` | relLangURL }}">{{ i18n `browse_all` | default "查看全部" }}</a>
+            <a class="pixel-button pixel-button--ghost" href="{{ `/tags/` | relLangURL }}">{{ i18n `taxonomy_overview` | default "主题索引" }}</a>
+          </div>
+        </div>
+        <div class="pixel-hero__side">
+          <div class="pixel-hero__art" aria-hidden="true">
+            <div class="pixel-hero__art-screen">
+              <div class="pixel-hero__art-sun"></div>
+              <div class="pixel-hero__art-cloud pixel-hero__art-cloud--one"></div>
+              <div class="pixel-hero__art-cloud pixel-hero__art-cloud--two"></div>
+              <div class="pixel-hero__art-city">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="pixel-hero__art-ground"></div>
+              <div class="pixel-hero__art-avatar">
+                <span class="pixel-hero__art-avatar-head"></span>
+                <span class="pixel-hero__art-avatar-body"></span>
+              </div>
+            </div>
+          </div>
+          {{ if $showStatusPanel }}
+            <aside class="pixel-status-panel" aria-label="Site status">
+              <div class="pixel-status-panel__row">
+                <span>{{ site.Params.pixelTheme.statusLabel | default "SYSTEM" }}</span>
+                <strong>{{ site.Params.pixelTheme.statusValue | default "WRITING / SHIPPING / LEARNING" }}</strong>
+              </div>
+              <div class="pixel-status-panel__row">
+                <span>{{ site.Params.pixelTheme.nowLabel | default "NOW" }}</span>
+                <strong>{{ site.Params.pixelTheme.nowValue | default "Hugo Theme Build" }}</strong>
+              </div>
+              <div class="pixel-status-panel__row">
+                <span>{{ site.Params.pixelTheme.focusLabel | default "FOCUS" }}</span>
+                <strong>{{ site.Params.pixelTheme.focusValue | default "Java / Infra / Notes" }}</strong>
+              </div>
+              <div class="pixel-status-panel__stats">
+                <div>
+                  <span>POSTS</span>
+                  <strong>{{ len $pages }}</strong>
+                </div>
+                <div>
+                  <span>TAGS</span>
+                  <strong>{{ len site.Taxonomies.tags }}</strong>
+                </div>
+                <div>
+                  <span>CATS</span>
+                  <strong>{{ len site.Taxonomies.categories }}</strong>
+                </div>
+              </div>
+            </aside>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+    <section class="pixel-section">
+      <div class="pixel-section__head">
+        <div>
+          <p class="pixel-section__eyebrow">READ</p>
+          <h2>{{ i18n "latest_posts" | default "最新文章" }}</h2>
+        </div>
+        <a class="pixel-text-link" href="{{ `/posts/` | relLangURL }}">{{ i18n "browse_all" | default "查看全部" }}</a>
+      </div>
+      <div class="pixel-post-grid">
+        {{ range first 6 $pages }}
+          {{ partial "pixel/post-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="pixel-section pixel-archive-timeline">
+      <div class="pixel-section__head">
+        <div>
+          <p class="pixel-section__eyebrow">ARCHIVE</p>
+          <h2>归档时间轴</h2>
+        </div>
+        <a class="pixel-text-link" href="{{ `/posts/` | relLangURL }}">按时间浏览</a>
+      </div>
+      <div class="pixel-archive-timeline__rail">
+        {{ range first 4 $yearGroups }}
+          <section class="pixel-archive-year">
+            <header class="pixel-archive-year__head">
+              <span class="pixel-archive-year__dot"></span>
+              <div>
+                <h3>{{ .Key }}</h3>
+                <p>{{ len .Pages }} 篇文章</p>
+              </div>
+            </header>
+            <div class="pixel-archive-year__entries">
+              {{ range first 3 .Pages }}
+                <article class="pixel-archive-entry">
+                  <span class="pixel-archive-entry__date">{{ .Date.Format "01-02" }}</span>
+                  <div class="pixel-archive-entry__body">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    <p>{{ .Params.summary | default .Description | default (.Summary | plainify) }}</p>
+                  </div>
+                </article>
+              {{ end }}
+            </div>
+          </section>
+        {{ end }}
+      </div>
+    </section>
+  </section>
+{{ end }}

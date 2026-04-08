@@ -1,0 +1,33 @@
+<article class="pixel-post-card">
+  <header>
+    <p class="pixel-post-card__meta">
+      {{ i18n "published" }}:
+      <time datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format (default "2006-01-02" .Site.Params.DateFormat) }}
+      </time>
+      {{- if .ReadingTime -}}
+        · {{ .ReadingTime }} {{ i18n "minutes" }}
+      {{- end -}}
+    </p>
+    <h3>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h3>
+  </header>
+
+  {{- $summaryText := partial "summary.html" . -}}
+  {{- if gt (len $summaryText) 0 -}}
+    <p class="pixel-summary-box">{{ $summaryText }}</p>
+  {{- end -}}
+
+  {{- with .Params.tags -}}
+    <div class="pixel-chip-list">
+      {{- range . -}}
+        <a href="{{ (printf "/tags/%s/" (urlize .)) | relLangURL }}">{{ . }}</a>
+      {{- end -}}
+    </div>
+  {{- end -}}
+
+  <p class="pixel-post-card__read-more">
+    <a href="{{ .RelPermalink }}">{{ i18n "readMore" }}</a>
+  </p>
+</article>

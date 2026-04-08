@@ -1,0 +1,21 @@
+{{ $result := transform.HighlightCodeBlock . (merge .Options (dict "noClasses" false)) }}
+{{ $lang := .Type | default "text" }}
+{{ $extraClass := index .Attributes "class" }}
+{{ $extraId := index .Attributes "id" }}
+<div class="pixel-code-block{{ with $extraClass }} {{ . }}{{ end }}"{{ with $extraId }} id="{{ . }}"{{ end }} data-lang="{{ $lang | lower }}">
+  <div class="pixel-code-block__toolbar">
+    <span class="pixel-code-block__lang">{{ $lang | upper }}</span>
+    <button
+      class="pixel-code-copy"
+      type="button"
+      aria-label="{{ i18n `code_copy` | default `复制代码` }}"
+      data-copy-default="{{ i18n `code_copy` | default `复制代码` }}"
+      data-copy-success="{{ i18n `code_copied` | default `已复制` }}"
+    >
+      <span class="pixel-code-copy__label">{{ i18n "code_copy" | default "复制代码" }}</span>
+    </button>
+  </div>
+  <div class="pixel-code-block__body">
+    {{ $result.Wrapped }}
+  </div>
+</div>

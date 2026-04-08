@@ -1,0 +1,8 @@
+{{ if and (.Param "ShowRightToc" | default true) .TableOfContents }}
+  <aside class="pixel-toc">
+    <div class="pixel-toc__title">{{ i18n "table_of_contents" | default "目录" }}</div>
+    <div class="pixel-toc__body">
+      {{ .TableOfContents }}
+    </div>
+  </aside>
+{{ end }}

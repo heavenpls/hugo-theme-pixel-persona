@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang | default site.LanguageCode | default `zh-cn` }}" data-theme="light">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body class="pixel-body{{ if .IsHome }} pixel-body--home{{ end }}{{ if .IsPage }} pixel-body--single{{ end }}{{ if or (eq .Kind `section`) (eq .Kind `taxonomy`) (eq .Kind `term`) }} pixel-body--list{{ end }}">
+  {{ partial "header.html" . }}
+  <main class="pixel-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+</body>
+</html>

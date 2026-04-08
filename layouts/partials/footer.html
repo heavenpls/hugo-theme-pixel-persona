@@ -1,0 +1,15 @@
+<footer class="pixel-site-footer">
+  <div class="pixel-shell pixel-footer-shell">
+    <div>
+      <strong>{{ site.Title }}</strong>
+      <p>{{ site.Params.description | default "Personal blog powered by Hugo." }}</p>
+    </div>
+    <div class="pixel-footer-shell__meta">
+      <span>&copy; {{ now.Year }}</span>
+      <span>{{ site.Params.author.name | default "Author" }}</span>
+      <a href="https://gohugo.io/" target="_blank" rel="noreferrer">Hugo</a>
+    </div>
+  </div>
+  <script src="{{ `js/pixel-theme-toggle.js` | relURL }}"></script>
+  <script src="{{ `js/pixel-code-copy.js` | relURL }}"></script>
+</footer>
