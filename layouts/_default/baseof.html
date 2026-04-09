@@ -3,7 +3,7 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body class="pixel-body{{ if .IsHome }} pixel-body--home{{ end }}{{ if .IsPage }} pixel-body--single{{ end }}{{ if or (eq .Kind `section`) (eq .Kind `taxonomy`) (eq .Kind `term`) }} pixel-body--list{{ end }}">
+<body class="pixel-body{{ if .IsHome }} pixel-body--home{{ end }}{{ if .IsPage }} pixel-body--single{{ end }}{{ if or (eq .Kind `section`) (eq .Kind `taxonomy`) (eq .Kind `term`) }} pixel-body--list{{ end }}{{ if site.Params.pixelTheme.enableNoise }} pixel-body--noise{{ end }}{{ if site.Params.pixelTheme.enableCrtEffect }} pixel-body--crt{{ end }}">
   {{ partial "header.html" . }}
   <main class="pixel-main">
     {{ block "main" . }}{{ end }}
