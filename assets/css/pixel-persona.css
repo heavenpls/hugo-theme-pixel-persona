@@ -40,6 +40,10 @@
   --pixel-atmosphere-secondary: rgba(50, 88, 216, 0.05);
   --pixel-noise-opacity: 0;
   --pixel-scanline-opacity: 0;
+  --pixel-code-highlight-surface: #171b22;
+  --pixel-code-highlight-text: #e7ded1;
+  --pixel-code-plain-surface: #f3ebdd;
+  --pixel-code-plain-text: #241f1a;
   --pixel-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
   --pixel-ui: "VT323", "Cascadia Mono", "JetBrains Mono", monospace;
   --pixel-display: "Press Start 2P", "VT323", monospace;
@@ -66,6 +70,10 @@ html[data-theme="dark"] {
   --pixel-atmosphere-secondary: rgba(89, 225, 208, 0.11);
   --pixel-noise-opacity: 0.2;
   --pixel-scanline-opacity: 0.08;
+  --pixel-code-highlight-surface: #15181e;
+  --pixel-code-highlight-text: #e7ded1;
+  --pixel-code-plain-surface: #15181e;
+  --pixel-code-plain-text: #e7ded1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -89,6 +97,10 @@ html[data-theme="dark"] {
     --pixel-atmosphere-secondary: rgba(89, 225, 208, 0.11);
     --pixel-noise-opacity: 0.2;
     --pixel-scanline-opacity: 0.08;
+    --pixel-code-highlight-surface: #15181e;
+    --pixel-code-highlight-text: #e7ded1;
+    --pixel-code-plain-surface: #15181e;
+    --pixel-code-plain-text: #e7ded1;
   }
 }
 
@@ -827,17 +839,30 @@ html[data-theme="dark"] .pixel-status-panel {
 }
 
 .pixel-code-block__body .chroma {
-  color: #e7ded1;
-  background: #171b22;
+  color: var(--pixel-code-highlight-text);
+  background: var(--pixel-code-highlight-surface);
 }
 
 .pixel-code-block__body .highlight,
-.pixel-code-block__body pre {
+.pixel-code-block__body pre.chroma {
   margin: 0;
   max-width: 100%;
   border: 0;
   box-shadow: none;
-  background: #171b22;
+  background: var(--pixel-code-highlight-surface);
+}
+
+.pixel-code-block__body > pre {
+  margin: 0;
+  max-width: 100%;
+  border: 0;
+  box-shadow: none;
+  background: var(--pixel-code-plain-surface);
+  color: var(--pixel-code-plain-text);
+}
+
+.pixel-code-block__body > pre code {
+  color: inherit;
 }
 
 .pixel-code-block__body {
@@ -938,12 +963,6 @@ html[data-theme="dark"] .pixel-status-panel {
 
 .pixel-code-block__body .chroma .hl {
   background: rgba(255, 173, 102, 0.09);
-}
-
-html[data-theme="dark"] .pixel-code-block__body .chroma,
-html[data-theme="dark"] .pixel-code-block__body .highlight,
-html[data-theme="dark"] .pixel-code-block__body pre {
-  background: #15181e;
 }
 
 .pixel-code-copy {
