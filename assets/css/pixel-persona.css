@@ -44,6 +44,8 @@
   --pixel-code-highlight-text: #e7ded1;
   --pixel-code-plain-surface: #f3ebdd;
   --pixel-code-plain-text: #241f1a;
+  --pixel-sidebar-top: 6.35rem;
+  --pixel-sidebar-bottom-gap: 1rem;
   --pixel-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
   --pixel-ui: "VT323", "Cascadia Mono", "JetBrains Mono", monospace;
   --pixel-display: "Press Start 2P", "VT323", monospace;
@@ -1146,6 +1148,10 @@ html[data-theme="dark"] .pixel-status-panel {
   margin-bottom: 0.8rem;
 }
 
+.pixel-article__content :is(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: calc(var(--pixel-sidebar-top) + 1rem);
+}
+
 .pixel-article__content p,
 .pixel-article__content ul,
 .pixel-article__content ol,
@@ -1192,9 +1198,12 @@ html[data-theme="dark"] .pixel-status-panel {
 
 .pixel-article-sidebar {
   position: sticky;
-  top: 5.5rem;
-  display: grid;
+  top: var(--pixel-sidebar-top);
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  min-height: 0;
+  max-height: calc(100svh - var(--pixel-sidebar-top) - var(--pixel-sidebar-bottom-gap));
 }
 
 .pixel-article-facts,
@@ -1234,18 +1243,70 @@ html[data-theme="dark"] .pixel-status-panel {
 }
 
 .pixel-toc {
-  position: sticky;
-  top: 0;
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 16rem;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pixel-toc__title {
   margin-bottom: 0.8rem;
 }
 
+.pixel-toc__body-wrap {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pixel-toc__body {
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 0.35rem;
+}
+
+.pixel-toc__shadow {
+  position: absolute;
+  left: 0;
+  right: 0.35rem;
+  z-index: 1;
+  height: 1rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.pixel-toc__shadow--top {
+  top: 0;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--pixel-panel) 98%, transparent) 0%, color-mix(in srgb, var(--pixel-panel) 80%, transparent) 40%, transparent 100%);
+}
+
+.pixel-toc__shadow--bottom {
+  bottom: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--pixel-panel) 98%, transparent) 0%, color-mix(in srgb, var(--pixel-panel) 80%, transparent) 40%, transparent 100%);
+}
+
+.pixel-toc.has-shadow-top .pixel-toc__shadow--top,
+.pixel-toc.has-shadow-bottom .pixel-toc__shadow--bottom {
+  opacity: 1;
+}
+
 .pixel-toc__body nav ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
+  display: grid;
+  gap: 0.15rem;
 }
 
 .pixel-toc__body nav ul ul {
@@ -1256,12 +1317,43 @@ html[data-theme="dark"] .pixel-status-panel {
 
 .pixel-toc__body a {
   display: block;
-  padding: 0.25rem 0;
+  padding: 0.3rem 0.45rem 0.3rem 0;
   color: var(--pixel-muted);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease, padding-left 160ms ease;
+}
+
+.pixel-toc__body > nav > ul > li > a {
+  color: var(--pixel-text);
 }
 
 .pixel-toc__body a:hover {
   color: var(--pixel-text);
+  background: color-mix(in srgb, var(--pixel-panel-strong) 75%, transparent);
+  padding-left: 0.3rem;
+}
+
+.pixel-toc__body a.is-active,
+.pixel-toc__body a[aria-current="location"] {
+  color: var(--pixel-text);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--pixel-accent) 16%, transparent) 0%, color-mix(in srgb, var(--pixel-panel-strong) 92%, transparent) 100%);
+  box-shadow: inset 3px 0 0 var(--pixel-accent);
+  padding-left: 0.45rem;
+}
+
+.pixel-toc__body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.pixel-toc__body::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--pixel-panel-strong) 72%, transparent);
+}
+
+.pixel-toc__body::-webkit-scrollbar-thumb {
+  border: 2px solid color-mix(in srgb, var(--pixel-panel-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--pixel-border) 50%, transparent);
 }
 
 .pixel-404-shell {
@@ -1311,6 +1403,10 @@ html[data-theme="dark"] .pixel-status-panel {
   .pixel-article-sidebar,
   .pixel-toc {
     position: static;
+  }
+
+  .pixel-article-sidebar {
+    max-height: none;
   }
 }
 

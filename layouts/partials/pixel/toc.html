@@ -1,8 +1,12 @@
 {{ if and (.Param "ShowRightToc" | default true) .TableOfContents }}
-  <aside class="pixel-toc">
+  <aside class="pixel-toc" data-enhanced-toc>
     <div class="pixel-toc__title">{{ i18n "table_of_contents" | default "目录" }}</div>
-    <div class="pixel-toc__body">
-      {{ .TableOfContents }}
+    <div class="pixel-toc__body-wrap">
+      <div class="pixel-toc__shadow pixel-toc__shadow--top" aria-hidden="true"></div>
+      <div class="pixel-toc__body" data-toc-scroll>
+        {{ .TableOfContents }}
+      </div>
+      <div class="pixel-toc__shadow pixel-toc__shadow--bottom" aria-hidden="true"></div>
     </div>
   </aside>
 {{ end }}
